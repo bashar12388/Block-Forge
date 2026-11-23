@@ -1,0 +1,33 @@
+# Render blueprint for Blockforge.
+#
+# WebSockets and a writable disk are required. Render's free plan has neither a
+# persistent disk nor always-on instances, so this uses the Starter plan.
+# Import this repository in Render and it will read this file.
+services:
+  - type: web
+    name: blockforge
+    runtime: docker
+    plan: starter
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 4173
+      - key: BLOCKFORGE_DATA
+        value: /data
+      # Optional but recommended: set a password for the first (owner) account.
+      # Leave empty and the server generates one and prints it once in the logs.
+      - key: BLOCKFORGE_OWNER_USERNAME
+        value: forge
+      - key: BLOCKFORGE_OWNER_PASSWORD
+        sync: false
+    disk:
+      name: blockforge-data
+      mountPath: /data
+      sizeGB: 1

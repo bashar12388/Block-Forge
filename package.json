@@ -1,0 +1,21 @@
+{
+  "name": "blockforge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Blockforge — a multiplayer world-building platform: discovery, avatars, shop, Studio, and server-authoritative admin commands.",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "smoke": "node scripts/smoke.mjs",
+    "reset": "node -e \"import('node:fs').then(fs=>{for (const f of ['data/blockforge.db','data/blockforge.db-wal','data/blockforge.db-shm']) { try { fs.unlinkSync(f) } catch {} } console.log('data reset')})\""
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "three": "^0.187.0",
+    "ws": "^8.23.0"
+  }
+}

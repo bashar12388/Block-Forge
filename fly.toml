@@ -1,0 +1,25 @@
+app = "blockforge"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  HOST = "0.0.0.0"
+  PORT = "4173"
+  BLOCKFORGE_DATA = "/data"
+
+[http_service]
+  internal_port = 4173
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+
+[[mounts]]
+  source = "blockforge_data"
+  destination = "/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
