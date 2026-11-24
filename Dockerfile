@@ -9,7 +9,6 @@ RUN npm ci --omit=dev
 COPY . .
 
 ENV NODE_ENV=production \
-    PORT=4173 \
     HOST=0.0.0.0 \
     BLOCKFORGE_DATA=/data
 

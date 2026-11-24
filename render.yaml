@@ -17,8 +17,7 @@ services:
         value: production
       - key: HOST
         value: 0.0.0.0
-      - key: PORT
-        value: 4173
+      # Render assigns PORT itself (10000) and routes to it, so do not pin a port.
       - key: BLOCKFORGE_DATA
         value: /data
       # Optional but recommended: set a password for the first (owner) account.
