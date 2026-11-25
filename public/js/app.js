@@ -136,6 +136,10 @@ async function boot() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('[sw]', err));
   }
+  // Ask the browser not to evict saved worlds when storage runs low.
+  if (navigator.storage?.persist) {
+    navigator.storage.persist().catch(() => {});
+  }
 }
 
 boot().catch((err) => {
