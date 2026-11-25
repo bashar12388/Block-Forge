@@ -22,6 +22,42 @@ Everything needed to deploy is already in this folder:
 
 ---
 
+## Option 0 — Free from your own computer (no account, no card)
+
+This is the zero-cost way to get an `https://` link that works anywhere.
+Cloudflare quick tunnels are free, need no Cloudflare login, and proxy
+WebSockets, so multiplayer and `;commands` work.
+
+1. Prepare a production copy of the database (one time):
+   ```powershell
+   $env:BLOCKFORGE_DATA='./data-live'
+   $env:LIVE_OWNER_PASSWORD='choose-a-strong-password'
+   node scripts/live-db.mjs
+   ```
+   This snapshots `data/blockforge.db`, sets the owner password, and randomizes
+   the demo account passwords. A fresh `data-live/` also works: production mode
+   creates one owner and prints a generated password once in the server window.
+2. Start the server and tunnel:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File scripts/live.ps1
+   ```
+   The first run downloads `cloudflared` (~53 MB) into `%TEMP%`.
+3. Copy the `https://….trycloudflare.com` address printed in the window. That is
+   the public game link.
+4. Sign in as the owner, open a world, and test from a phone on mobile data.
+
+Notes and limits:
+
+- The computer is the server. It must stay on and awake while people play.
+- The address changes every time you restart the tunnel. Share the new one.
+- Data lives in `data-live/` (`blockforge.db` + automatic backups), not on a host.
+- When the computer is off, installed tablets still open saved worlds in solo mode.
+- Quick tunnels are for family/small groups, not a high-traffic public launch.
+- For an always-on address, use Option A/B/C below, which need a paid host with a
+  persistent disk (Render Starter is about $7/month).
+
+---
+
 ## Option A — Render (easiest, recommended)
 
 Render gives HTTPS, WebSockets and a persistent disk with very little setup.

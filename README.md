@@ -220,7 +220,37 @@ Targets accept exact names, unique prefixes, `@name`, `me`/`self`, and `all`.
 ## Upload it to the internet
 
 Blockforge needs a Node process, WebSockets and a writable disk, so it cannot run on
-static hosts such as Netlify. The repo ships ready-to-use deployment files:
+static hosts such as Netlify.
+
+### Free public link (no account, no card)
+
+The quickest way to let family play from another house is to share this computer
+through a Cloudflare quick tunnel. It is free, needs no Cloudflare account, and
+WebSockets pass through it:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/live.ps1
+```
+
+The script starts a production server from `data-live/` and prints an
+`https://….trycloudflare.com` address. That address works from any phone, tablet,
+or laptop on any network while the window stays open. Keep the computer awake.
+
+- The address changes every time you start the tunnel.
+- The computer is the server, so it must be on to play remotely. When it is off,
+  installed tablets still open worlds from their **Saved** tab in solo mode.
+- The first time, create the live database from your development one:
+  ```powershell
+  $env:BLOCKFORGE_DATA='./data-live'
+  $env:LIVE_OWNER_PASSWORD='choose-a-strong-password'
+  node scripts/live-db.mjs
+  ```
+  This takes a snapshot, sets the owner password, and locks the demo accounts.
+- A fresh `data-live/` works too: production mode creates one owner and prints a
+  generated password once in the server window.
+
+For an always-on address you need a host with a persistent disk. The repo ships
+ready-to-use deployment files for those:
 
 - **Render** — import the repo and apply `render.yaml` (Docker, Starter plan, 1 GB
   disk at `/data`). This is the least fiddly option.
